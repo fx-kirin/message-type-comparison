@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "message-type-comparison"
+version = "0.1.0"
+description = ""
+authors = ["fx_kirin <fx.kirin@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+cbor2 = "^4.1.2"
+msgpack = "^0.6.2"
+kanilog = "^0.3.2"
+logzero = "^1.5.0"
+stdlogging = "^0.16"
+Benchmarker = "^4.0.1"
+numpy = "^1.18.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
