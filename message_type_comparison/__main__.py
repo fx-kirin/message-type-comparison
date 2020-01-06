@@ -21,8 +21,11 @@ from benchmarker import Benchmarker
 
 import cbor2
 import kanilog
-import stdlogging
+import msgpack_numpy as m
 import orjson
+import stdlogging
+
+m.patch()
 
 
 def default(obj):
@@ -31,26 +34,15 @@ def default(obj):
 
 
 def main():
-    logging.info("getting benchmark")
+    logging.info("Comparing numpy")
     a = np.arange(100000.0)
-    listed = a.tolist()
 
     with Benchmarker(100000, width=50) as bench:
 
-        @bench("cbor2.dump")
-        def _(bm):
-            data = cbor2.dumps(listed)
-            cbor2.loads(data)
-
         @bench("message_pack")
         def _(bm):
-            data = msgpack.packb(listed)
+            data = msgpack.packb(a)
             msgpack.unpackb(data)
-
-        @bench("orjson")
-        def _(bm):
-            data = orjson.dumps(listed)
-            orjson.loads(data)
 
         for i in range(5):
 
@@ -59,6 +51,7 @@ def main():
                 data = pickle.dumps(a, protocol=i)
                 pickle.loads(data)
 
+    logging.info("Comparing PyList")
     a = list([float(v) for v in a])
     with Benchmarker(100000, width=50) as bench:
 
